@@ -34,14 +34,17 @@ class Book:
         pass
     
 
-class Files:
+class File:
     "Text file class"
     
-    def __init__(self, file_name):
-        file_name = "Default"
+    def __init__(self, file_name, input_text):
+        self.file_name = file_name
+        self.input_text = input_text
         
-    def file_write(self, file_name):
-        pass
+    def file_write(self):
+        with open(self.file_name, 'a') as f:
+            f.write(self.input_text)
+            
     
     def file_read(self, file_name):
         pass
@@ -87,5 +90,13 @@ def main(message):
 
     main_bot = Bot()
     main_bot.data_in(message, output)
+    file_name = str(message.from_user.id)
+    input_text = datetime.utcfromtimestamp(message.date).strftime('%Y-%m-%d %H:%M:%S ')\
+                 + "Input message: " + message.text + "\n"
+    text_log = File(file_name, input_text)
+    #print(file.file_address)
+    #print(file.input_text)
+    text_log.file_write()
+    
 
 bot.polling(none_stop=True, interval=1)
